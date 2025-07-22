@@ -1,0 +1,9 @@
+services:
+
+  prowler-cli:
+    image: ${PROWLER_IMAGE:-prowlercloud/prowler}:${PROWLER_VERSION:-5.9.1}
+    container_name: prowler-cli
+    env_file: .env
+    volumes:
+      - ./output/:/home/prowler/output/
+    command: aws

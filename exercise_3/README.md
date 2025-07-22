@@ -83,7 +83,7 @@ Although this approach is robust, there are several complexities we must acknowl
 
 ## Submission requisite
 
-As a PDF file was requested, I generated a [`README.pdf`](./README.pdf) version of this Markdown file using [`Pandoc`](https://pandoc.org/):
+As a PDF file was requested, I generated a [`README.pdf`](./README.pdf) version of this Markdown file using [Pandoc](https://pandoc.org/):
 ```bash
 pandoc README.md -o README.pdf
 ```

@@ -1,6 +1,6 @@
 # Exercise 1: Usage and Customization of Prowler
 
-To complete the first exercise, I followed the [Getting Started](https://docs.prowler.com/projects/prowler-open-source/en/latest/) page in the [Prolwer documentation](https://docs.prowler.com/).
+To complete the first exercise, I followed the [Getting Started](https://docs.prowler.com/projects/prowler-open-source/en/latest/) page in the [Prowler documentation](https://docs.prowler.com/).
 
 
 ## Work done

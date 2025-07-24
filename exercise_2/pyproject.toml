@@ -1,0 +1,41 @@
+[project]
+name = "prowler-manager"
+version = "0.1.0"
+description = "Prowler Python Engineer Technical Exercise 2 - Django REST Framework CRUD Application"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.2.4",
+    "djangorestframework>=3.16.0",
+    "drf-nested-routers>=0.93.4",
+    "psycopg[binary]>=3.2.9",
+    "uuid-utils>=0.11.0",
+]
+
+[dependency-groups]
+dev = [
+    "debugpy>=1.8.15",
+]
+test = [
+    "ruff>=0.12.4",
+    "ty>=0.0.1a15",
+]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.isort]
+lines-between-types = 1
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "local-folder",
+]
+
+[tool.ruff.lint.pycodestyle]
+max-line-length = 120
+
+[tool.ty.rules]  # TODO: Configure ty properly
+unresolved-import = "ignore"

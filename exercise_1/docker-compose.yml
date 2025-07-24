@@ -1,7 +1,7 @@
 services:
 
   prowler-cli:
-    image: ${PROWLER_IMAGE:-prowlercloud/prowler}:${PROWLER_VERSION:-5.9.1}
+    image: ${PROWLER_IMAGE:-prowlercloud/prowler:5.9.1}
     container_name: prowler-cli
     env_file: .env
     volumes:

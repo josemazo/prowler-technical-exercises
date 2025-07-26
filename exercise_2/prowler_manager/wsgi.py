@@ -11,6 +11,7 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "prowler_manager.settings")
+environment = os.environ.get("ENVIRONMENT", "local")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", f"prowler_manager.settings.{environment}")
 
 application = get_wsgi_application()

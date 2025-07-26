@@ -1,0 +1,212 @@
+[
+  {
+    "model": "api.provider",
+    "pk": "0198427a-f53d-78a0-b8f7-c79b98816b8f",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.198",
+      "updated_at": "2025-07-25T16:46:51.198",
+      "name": "AWS"
+    }
+  },
+  {
+    "model": "api.provider",
+    "pk": "0198427a-f540-7ff1-87af-8104d3c97bf5",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.200",
+      "updated_at": "2025-07-25T16:46:51.200",
+      "name": "Azure"
+    }
+  },
+  {
+    "model": "api.provider",
+    "pk": "0198427a-f545-70c2-a683-39e60389d5cd",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.205",
+      "updated_at": "2025-07-25T16:46:51.205",
+      "name": "GCP"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f549-7971-a2a9-577b231cc63a",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.209",
+      "updated_at": "2025-07-25T16:46:51.209",
+      "provider": "0198427a-f53d-78a0-b8f7-c79b98816b8f",
+      "name": "EC2 Security Groups Open to World"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f54b-7832-934e-6124c6fb50b6",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.211",
+      "updated_at": "2025-07-25T16:46:51.211",
+      "provider": "0198427a-f53d-78a0-b8f7-c79b98816b8f",
+      "name": "S3 Bucket Public Read Access"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f54d-7e90-bdb5-833be9bf8f75",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.213",
+      "updated_at": "2025-07-25T16:46:51.213",
+      "provider": "0198427a-f540-7ff1-87af-8104d3c97bf5",
+      "name": "Network Security Groups Allow All Inbound"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f54f-7463-afde-10cd1754a528",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.215",
+      "updated_at": "2025-07-25T16:46:51.215",
+      "provider": "0198427a-f540-7ff1-87af-8104d3c97bf5",
+      "name": "Storage Account Public Access Enabled"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f552-79f3-b032-e746fe75e255",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.218",
+      "updated_at": "2025-07-25T16:46:51.218",
+      "provider": "0198427a-f540-7ff1-87af-8104d3c97bf5",
+      "name": "Key Vault Soft Delete Disabled"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f557-75d0-81de-efc75d7061e9",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.223",
+      "updated_at": "2025-07-25T16:46:51.223",
+      "provider": "0198427a-f545-70c2-a683-39e60389d5cd",
+      "name": "Compute Instance Default Service Account"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f559-7d43-8690-ced463aa60da",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.225",
+      "updated_at": "2025-07-25T16:46:51.225",
+      "provider": "0198427a-f545-70c2-a683-39e60389d5cd",
+      "name": "Cloud Storage Bucket Public Access"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f55b-7a40-950c-982e4ccc12c3",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.227",
+      "updated_at": "2025-07-25T16:46:51.227",
+      "provider": "0198427a-f545-70c2-a683-39e60389d5cd",
+      "name": "Firewall Rules Allow All Traffic"
+    }
+  },
+  {
+    "model": "api.check",
+    "pk": "0198427a-f55c-7261-a8cc-faa633b19935",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.229",
+      "updated_at": "2025-07-25T16:46:51.229",
+      "provider": "0198427a-f545-70c2-a683-39e60389d5cd",
+      "name": "Cloud SQL Instance Public IP"
+    }
+  },
+  {
+    "model": "api.scan",
+    "pk": "0198427a-f55f-7333-a3cb-e412afc64da0",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.231",
+      "updated_at": "2025-07-25T16:46:51.233",
+      "provider": "0198427a-f53d-78a0-b8f7-c79b98816b8f",
+      "status": "completed",
+      "failed_reason": null,
+      "started_at": "2025-07-25T16:46:51.233",
+      "finished_at": "2025-07-25T16:46:51.233",
+      "name": "Production Environment Scan",
+      "comment": "Weekly security scan of production AWS environment"
+    }
+  },
+  {
+    "model": "api.scan",
+    "pk": "0198427a-f56c-7521-be61-15f9a7dc0eae",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.245",
+      "updated_at": "2025-07-25T16:46:51.245",
+      "provider": "0198427a-f540-7ff1-87af-8104d3c97bf5",
+      "status": "in_progress",
+      "failed_reason": null,
+      "started_at": "2025-07-25T16:46:51.245",
+      "finished_at": null,
+      "name": "Development Environment Scan",
+      "comment": "Development AZure environment security assessment"
+    }
+  },
+  {
+    "model": "api.scan",
+    "pk": "0198427a-f578-7221-a8b5-e766fd58a589",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.256",
+      "updated_at": "2025-07-25T16:46:51.256",
+      "provider": "0198427a-f545-70c2-a683-39e60389d5cd",
+      "status": "pending",
+      "failed_reason": null,
+      "started_at": null,
+      "finished_at": null,
+      "name": "Staging Environment Scan",
+      "comment": "Scan for new GCP resources deployment"
+    }
+  },
+  {
+    "model": "api.finding",
+    "pk": "0198427a-f569-7250-b230-7e1e0161e04e",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.241",
+      "updated_at": "2025-07-25T16:48:08.977",
+      "scan": "0198427a-f55f-7333-a3cb-e412afc64da0",
+      "check_parent": "0198427a-f549-7971-a2a9-577b231cc63a",
+      "success": true,
+      "comment": "Check error `EC2 Security Groups Open to World` with Manolo"
+    }
+  },
+  {
+    "model": "api.finding",
+    "pk": "0198427a-f56b-7aa3-b178-e4751d3ff5b7",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.243",
+      "updated_at": "2025-07-25T16:46:51.243",
+      "scan": "0198427a-f55f-7333-a3cb-e412afc64da0",
+      "check_parent": "0198427a-f54b-7832-934e-6124c6fb50b6",
+      "success": true,
+      "comment": "Check passed successfully"
+    }
+  },
+  {
+    "model": "api.finding",
+    "pk": "0198427a-f570-7022-bbdb-90b030e9723c",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.248",
+      "updated_at": "2025-07-25T16:46:51.248",
+      "scan": "0198427a-f56c-7521-be61-15f9a7dc0eae",
+      "check_parent": "0198427a-f54d-7e90-bdb5-833be9bf8f75",
+      "success": true,
+      "comment": "Check passed successfully"
+    }
+  },
+  {
+    "model": "api.finding",
+    "pk": "0198427a-f574-7413-bc30-a385f1367712",
+    "fields": {
+      "created_at": "2025-07-25T16:46:51.252",
+      "updated_at": "2025-07-25T16:48:41.537",
+      "scan": "0198427a-f56c-7521-be61-15f9a7dc0eae",
+      "check_parent": "0198427a-f54f-7463-afde-10cd1754a528",
+      "success": false,
+      "comment": "Check passed successfully"
+    }
+  }
+]

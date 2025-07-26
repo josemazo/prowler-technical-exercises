@@ -11,6 +11,7 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "prowler_manager.settings")
+environment = os.environ.get("ENVIRONMENT", "local")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", f"prowler_manager.settings.{environment}")
 
 application = get_asgi_application()

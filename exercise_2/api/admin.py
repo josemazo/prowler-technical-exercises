@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Check, Finding, Provider, Scan
+from api import models
 
 
 class BaseModelAdmin(admin.ModelAdmin):
@@ -40,7 +40,7 @@ class FindingAdmin(BaseModelAdmin):
         return obj.check_parent.name
 
 
-admin.site.register(Provider, ProviderAdmin)
-admin.site.register(Check, CheckAdmin)
-admin.site.register(Scan, ScanAdmin)
-admin.site.register(Finding, FindingAdmin)
+admin.site.register(models.Provider, ProviderAdmin)
+admin.site.register(models.Check, CheckAdmin)
+admin.site.register(models.Scan, ScanAdmin)
+admin.site.register(models.Finding, FindingAdmin)

@@ -1,9 +1,10 @@
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
 
-from scans import views
+from api import views
 
 router = DefaultRouter()
+router.register(r"health", views.HealthViewSet, basename="health")
 router.register(r"providers", views.ProviderViewSet, basename="providers")
 
 providers_router = NestedDefaultRouter(router, r"providers", lookup="provider")

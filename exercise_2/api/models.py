@@ -12,10 +12,13 @@ def generate_uuid7():
     return UUID(str(uuid_utils.uuid7()))
 
 
-# I'm a declared enemy of using time zones in the backend
+# Backend should only understand UTC timestamps
 class DateTimeUTCField(models.DateTimeField):
     def db_type(self, connection):
-        return "timestamp"  # This works on most SQL databases
+        if connection.settings_dict["ENGINE"] == "django.db.backends.postgresql":
+            return "timestamp without time zone"
+
+        return super().db_type(connection)
 
 
 class BaseModel(models.Model):
@@ -25,20 +28,6 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-
-
-"""
-TODO: A note to myself
-Taking a look to the Prowler documentation, it seems that `checks` are main entities: definitions of what to _check_ in
-each service of each provider.
-`scans` are the executions of those `checks` against a specific provider, at a specific time, by a specific user.
-So, `findings` are related directly to `scans` and `checks`: what was found during a specific check of a specific scan.
-
-But `Define relationships between models (e.g., a scan can have many checks, a check can have  many findings)` striked
-me, and I developed those models, the urls (`rest_framework_nested`) and views accordingly.
-
-I'll change it for what I found in the Prowler documentation, adding `providers`, as having non-dependant `checks` looks too simple.
-"""
 
 
 class Provider(BaseModel):
@@ -74,6 +63,7 @@ class Scan(BaseModel):
         Provider, related_name="scans", on_delete=models.CASCADE
     )  # Maybe if provider is deleted the scans should be saved
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.PENDING)
+    failed_reason = models.TextField(null=True, blank=True)
     started_at = DateTimeUTCField(null=True, blank=True)
     finished_at = DateTimeUTCField(null=True, blank=True)
     name = models.CharField(max_length=128, null=True, blank=True)
@@ -81,11 +71,12 @@ class Scan(BaseModel):
 
     class Meta:
         ordering = ["-created_at"]
+        unique_together = ["provider", "name"]
 
     def __str__(self):
         return f"{self.provider.name} - {self.status} - {self.name}"
 
-    # It's not the most efficient way to do this, but just for doing it
+    # TODO: Comment it's not the most efficient way to do this, but just for doing it
     @property
     def success(self):
         # If not completed, None

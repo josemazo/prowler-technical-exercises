@@ -8,15 +8,20 @@ dependencies = [
     "django>=5.2.4",
     "djangorestframework>=3.16.0",
     "drf-nested-routers>=0.93.4",
+    "gunicorn>=23.0.0",
+    "procrastinate[django]>=3.4.0",
     "psycopg[binary]>=3.2.9",
     "uuid-utils>=0.11.0",
 ]
 
 [dependency-groups]
-dev = [
+local = [
     "debugpy>=1.8.15",
 ]
 test = [
+    "pytest-cov>=6.2.1",
+    "pytest-django>=4.11.1",
+    "pytest-sugar>=1.0.0",
     "ruff>=0.12.4",
     "ty>=0.0.1a15",
 ]
@@ -37,5 +42,15 @@ section-order = [
 [tool.ruff.lint.pycodestyle]
 max-line-length = 120
 
-[tool.ty.rules]  # TODO: Configure ty properly
+[tool.ty.rules]  # TODO: `ty` is still in pre-release, but it's blazing fast
+unresolved-attribute = "ignore"
 unresolved-import = "ignore"
+unresolved-reference = "ignore"
+
+[tool.pytest.ini_options]
+python_files = [
+    "tests.py",
+    "test_*.py",
+    "*_tests.py",
+]
+DJANGO_SETTINGS_MODULE = "prowler_manager.settings.test"

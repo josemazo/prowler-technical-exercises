@@ -28,11 +28,11 @@ COPY uv.lock pyproject.toml /app/
 RUN --mount=from=uv-image,source=/usr/local/bin/uv,target=/bin/uv \
     --mount=type=cache,target=/root/.cache/uv \
     set -ex ; \
-    UV_EXTRA="--compile-bytecode --no-group dev --no-group test" ; \
+    UV_EXTRA="--compile-bytecode --no-group local --no-group test" ; \
     if [ $ENVIRONMENT = "local" ] ; then \
-        UV_EXTRA="--group dev --group test" ; \
+        UV_EXTRA="--group local --group test" ; \
     elif [ $ENVIRONMENT = "test" ] ; then \
-        UV_EXTRA="--no-group dev --group test" ; \
+        UV_EXTRA="--no-group local --group test" ; \
     fi ; \
     uv sync --locked --no-install-project $UV_EXTRA
 

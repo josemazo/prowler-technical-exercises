@@ -7,7 +7,7 @@ Django project with a possible solution to the Technical Exercise 2​ for the [
 - [Requisites](#requisites)
 - [Developing](#developing)
   - [A note about this approach](#a-note-about-this-approach)
-  - [Install more Python dependencies](#install-more-python-dependencies)
+  - [Manage Python dependencies](#manage-python-dependencies)
   - [Database changes](#database-changes)
 - [Testing](#testing)
 - [Debugging](#debugging)
@@ -29,7 +29,7 @@ For start the project in a local environment follow this steps:
 
 1. Make a copy of [`.env.template`](./.env.template) as `.env`.
 
-2. Edit `.env` contents as you wish, as the `POSTGRES...` or `SUPER...` variables. You can take a look at [About the solution](#asynchronous-scan-run) to know more of some of them.
+2. Edit `.env` contents as you wish, as the `POSTGRES...` or `SUPER...` variables. You can take a look at [Asynchronous scan run](#asynchronous-scan-run) to know more of some of them.
 
 3. Start PostgreSQL:
 ```bash
@@ -52,7 +52,7 @@ docker compose exec api python manage.py populatedb
 docker compose up worker
 ```
 
-7. Go to [http://localhost:8000](http://localhost?800) and start browsing the project.
+7. Go to [http://localhost:8000](http://localhost:8000) and start browsing the project.
 
 
 ### A note about this approach
@@ -61,7 +61,7 @@ Steps 3 to 6 could be condensend as a simple `docker compose up` but I have two 
 - Step 5 destroys your data, although that is easily adjustable, I wanted to get usable and showable data as fast as possible.
 
 
-### Install more Python dependencies
+### Manage Python dependencies
 
 As this project uses `uv`, you can check how it manages your project dependencies [here](https://docs.astral.sh/uv/concepts/projects/dependencies/).
 
@@ -165,12 +165,12 @@ The task I've created is simple, it emulates a scan run by creating its findings
 
 There are a series of improvements for this project. I'll list here the ones I find more interesting:
 
-- Authentication and authorization, so users can manage and see only their scans.
+- Add a better logging system (e.g., [`django-structlog`](https://django-structlog.readthedocs.io/)), with stuff like unique `request_id` (e.g., [`django-request-id`](https://django-request-id.readthedocs.io/)), file and line where the log was fired, or even JSON format for the production environment.
 
-- The code is not typed, something I like to do, but there is too much magic with Django Rest Framework, specially with its `ModelViewSet`. I've never use DRF and I would like to understand it a little bit better before implementing types anotations.
+- Add [`pre-commit`](https://pre-commit.com/) for ensuring no tested code is commited and add [GitHub Ations](https://github.com/features/actions) for running those tests on the cloud, and also managing possible deploys.
 
 - Using [Uvicorn](https://www.uvicorn.org/) as ASGI server for _await_ views and data access and not blocking the thread. It looks that with DRF is somehting more diffcult than with regular Django, so I didn't enter in that.
 
-- Add a better logging system ([`django-structlog`](https://django-structlog.readthedocs.io/)), with stuff like unique `request_id` ([`django-request-id`](https://django-request-id.readthedocs.io/)), file and line where the log was fired, or even JSON format for the production environment.
+- Authentication and authorization, so users can manage and see only their scans.
 
-- Add [`pre-commit`](https://pre-commit.com/) for ensuring no tested code is commited and add [GitHub Ations](https://github.com/features/actions) for running those tests on the cloud, and also managing possible deploys. **TODO**
+- The code is not typed, something I like to do, but there is too much magic with Django Rest Framework, specially with its `ModelViewSet`. I've never use DRF and I would like to understand it a little bit better before implementing types anotations.

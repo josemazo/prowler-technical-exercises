@@ -27,10 +27,20 @@ services:
     container_name: prowler-manager-api
     ports:
       - ${API_PORT}:${API_PORT}
+    healthcheck:
+      test: wget --quiet --tries=1 --spider http://127.0.0.1:${API_PORT}/api/health || exit 1
+      interval: 15s
+      timeout: 10s
+      start_period: 3s
 
   worker:
     <<: *common-app-depends-postgres
     container_name: prowler-manager-worker
+    healthcheck:
+      test: python manage.py procrastinate healthchecks > /dev/null 2>&1 || exit 1
+      interval: 15s
+      timeout: 10s
+      start_period: 3s
     command: worker
 
   debug-api:
@@ -62,6 +72,11 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - 5432:5432
+    healthcheck:
+      test: pg_isready -q
+      interval: 15s
+      timeout: 10s
+      start_period: 3s
     restart: unless-stopped
 
 volumes:

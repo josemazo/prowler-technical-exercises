@@ -6,8 +6,12 @@ from api import models
 
 BASE_FIELDS = ["id", "created_at", "updated_at"]
 
+# Note: URLs has been added to the serializers for easing navigation while browsing the API
+
 
 class URLFieldsMixin:
+    """Mixin for removing the URLs from the output when not in DEBUG or when the requested format is JSON and not API"""
+
     url_fields = []
 
     def to_representation(self, instance):
@@ -26,7 +30,6 @@ class ProviderSerializer(URLFieldsMixin, serializers.HyperlinkedModelSerializer)
     checks_url = serializers.HyperlinkedIdentityField(
         view_name="provider-checks-list", read_only=True, lookup_url_kwarg="provider_pk"
     )
-    # TODO: Comment about the urls
 
     class Meta:
         model = models.Provider
@@ -67,16 +70,18 @@ class ScanSerializer(URLFieldsMixin, serializers.ModelSerializer):
             self.fields["provider_id"].read_only = True
 
     provider_id = serializers.UUIDField()
+
+    # As in `models.Scan.success`, this is costly operation, just for showing calculated fields in views and serializers
     checks_total = serializers.IntegerField(read_only=True)
     checks_executed = serializers.IntegerField(read_only=True)
     checks_pending = serializers.IntegerField(read_only=True)
     checks_success = serializers.IntegerField(read_only=True)
     checks_failed = serializers.IntegerField(read_only=True)
     status_url = serializers.HyperlinkedIdentityField(view_name="scans-status", read_only=True, lookup_url_kwarg="pk")
+
     findings_url = serializers.HyperlinkedIdentityField(
         view_name="scan-findings-list", read_only=True, lookup_url_kwarg="scan_pk"
     )
-    # TODO: Comment checks it's not the most efficient way to do this, but just for doing it
 
     class Meta:
         model = models.Scan

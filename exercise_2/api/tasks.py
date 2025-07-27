@@ -13,6 +13,8 @@ logger = logging.getLogger(__name__)
 
 @app.task
 def start_scan(scan_id):
+    """Starts a scan for the given scan ID"""
+
     logger.info(f"Starting scan with ID: {scan_id}")
 
     try:
@@ -24,6 +26,7 @@ def start_scan(scan_id):
 
     logger.info(f"({scan_id}) Provider: {scan.provider.name} - Name: {scan.name}")
 
+    # Now can start the scan, so let's update its `status` and the `started_at` timestamp
     scan.status = models.Scan.Status.IN_PROGRESS
     scan.started_at = timezone.now()
     scan.save()
@@ -31,11 +34,13 @@ def start_scan(scan_id):
     scan_status = models.Scan.Status.COMPLETED
     failed_reason = None
 
+    # Gett all the checks for this provider
     checks = models.Check.objects.filter(provider=scan.provider)
     if not checks.exists():
         scan_status = models.Scan.Status.FAILED
         failed_reason = "no checks found for provider"
 
+    # For each check, simulate a delay, a possible exception (it will fail the scan) and a success/failure condition
     for check in checks:
         time.sleep(settings.CHECK_SLEEP_TIME)
 
@@ -49,6 +54,7 @@ def start_scan(scan_id):
         models.Finding.objects.create(scan=scan, check_parent=check, success=success)
         logger.info(f"({scan_id}) Check: {check.name} - Success: {success}")
 
+    # Saving scan final `status`` and `finished_at` timestamp
     scan.status = scan_status
     scan.failed_reason = failed_reason
     scan.finished_at = timezone.now()

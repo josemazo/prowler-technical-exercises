@@ -37,6 +37,8 @@ class FindingAdmin(BaseModelAdmin):
 
     @admin.display(description="Check name", ordering="check_parent__name")
     def check_name(self, obj):
+        """Return `check_parent` label as `check`, as admin ignores the `verbose_name` property"""
+
         return obj.check_parent.name
 
 

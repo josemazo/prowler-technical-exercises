@@ -33,13 +33,20 @@ services:
     container_name: prowler-manager-worker
     command: worker
 
-  debug:
+  debug-api:
     <<: *common-app-depends-postgres
-    container_name: prowler-manager-debug
+    container_name: prowler-manager-debug-api
     ports:
       - ${API_PORT}:${API_PORT}
-      - ${DEBUG_PORT}:${DEBUG_PORT}
-    command: debug
+      - ${DEBUG_API_PORT}:${DEBUG_API_PORT}
+    command: debug-api
+
+  debug-worker:
+    <<: *common-app-depends-postgres
+    container_name: prowler-manager-debug-worker
+    ports:
+      - ${DEBUG_WORKER_PORT}:${DEBUG_WORKER_PORT}
+    command: debug-worker
 
   test:
     <<: *common-app

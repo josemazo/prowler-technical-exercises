@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 
 
-# uuid_utils is missing needed Python's UUID properties
+# `uuid_utils` is missing needed Python's UUID properties
 # Note: Python 3.14 and Postgres 18 will have native support for UUIDv7
 def generate_uuid7():
     return UUID(str(uuid_utils.uuid7()))
@@ -66,7 +66,7 @@ class Scan(BaseModel):
     failed_reason = models.TextField(null=True, blank=True)
     started_at = DateTimeUTCField(null=True, blank=True)
     finished_at = DateTimeUTCField(null=True, blank=True)
-    name = models.CharField(max_length=128, null=True, blank=True)
+    name = models.CharField(max_length=128)
     comment = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -76,9 +76,16 @@ class Scan(BaseModel):
     def __str__(self):
         return f"{self.provider.name} - {self.status} - {self.name}"
 
-    # TODO: Comment it's not the most efficient way to do this, but just for doing it
     @property
     def success(self):
+        """
+        Calculate if the scan was successful based on its findings.
+
+        Note:
+        Depending on the number of scans and findings this could be a costly operation, in real applications I'll prefer
+        to store the `success` field when a scan finishes, but just for showing the using of model properties is ok.
+        """
+
         # If not completed, None
         if self.status != self.Status.COMPLETED:
             return None
@@ -107,8 +114,8 @@ class Finding(BaseModel):
     def __str__(self):
         return f"{self.scan.provider.name} - {self.scan.name} - {self.check_parent.name} - {self.success}"
 
-    # Validate providers of the scan and the check are the same
     def clean(self):
+        """Validate providers of the scan and the check are the same"""
         super().clean()
         if self.scan.provider != self.check_parent.provider:
             raise ValidationError("`scan.provider` and `check.provider` must be the same.")

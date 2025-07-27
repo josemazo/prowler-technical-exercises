@@ -8,6 +8,7 @@ from django.views.static import serve
 
 
 def index(request):
+    """Index page with links to the admin and API apps"""
     return JsonResponse(
         {
             "admin": request.build_absolute_uri(reverse("admin:index")),
@@ -22,7 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
 ]
 
-# Adding static files serving in production, not ideal, but this is an exercise
+# Adding static files when serving in production, not ideal, but this is an exercise
 # Code from `django.conf.urls.static:static`
 if not settings.DEBUG:
     urlpatterns += [

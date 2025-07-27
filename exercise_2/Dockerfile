@@ -22,7 +22,7 @@ ENV PYTHONFAULTHANDLER=1 \
 
 WORKDIR /app
 
-# Copypig only the installation files because we want to cache the dependencies on not the code
+# Copy only the installation files because we want to cache the dependencies not the code
 COPY uv.lock pyproject.toml /app/
 
 RUN --mount=from=uv-image,source=/usr/local/bin/uv,target=/bin/uv \
@@ -39,12 +39,14 @@ RUN --mount=from=uv-image,source=/usr/local/bin/uv,target=/bin/uv \
 COPY ./ /app/
 
 FROM builder AS local
+# Copy uv in local, so we can use it if we want to go full container while developing
 COPY --from=uv-image /usr/local/bin/uv /usr/local/bin/uvx /bin/
 
 FROM builder AS test
 # NOOP
 
 FROM builder AS production
+# Precompile all Python files to bytecode for a faster startup
 RUN set -ex ; \
     python -OO -m compileall -b -f /app/src ; \
     find . -name "*.py" -type f -delete

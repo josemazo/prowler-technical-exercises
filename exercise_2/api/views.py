@@ -13,8 +13,9 @@ from rest_framework.viewsets import ModelViewSet, ViewSet
 from api import models, serializers, tasks
 
 
-# `GET` checks in one query if the database and procrastinate are healthy
 class HealthViewSet(ViewSet):
+    """`GET` checks in one query if the database and procrastinate are healthy"""
+
     def list(self, request):
         try:
             thirty_seconds_ago = timezone.now() - timedelta(seconds=30)
@@ -53,6 +54,7 @@ class CheckViewSet(ModelViewSet):
 
 
 class ScanViewSet(ModelViewSet):
+    # As in `models.Scan.success`, check counts are costly, just for showing calculated fields in views and serializers
     queryset = models.Scan.objects.all().annotate(
         checks_total=Count("provider__checks", distinct=True),
         checks_executed=Count("findings", distinct=True),
@@ -62,7 +64,7 @@ class ScanViewSet(ModelViewSet):
     )
     serializer_class = serializers.ScanSerializer
 
-    # But here check `provider` on POST data
+    # Check `provider` set on POST data exists
     def perform_create(self, serializer):
         provider_id = self.request.data["provider_id"]
         provider = get_object_or_404(models.Provider, pk=provider_id)

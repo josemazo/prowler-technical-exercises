@@ -276,6 +276,7 @@ class TestScanAPI:
         url = reverse("scans-detail", kwargs={"pk": self.scan.id})
         updated_data = {
             "provider_id": str(self.provider_alternative.id),
+            "name": SCANS["production"],
             "comment": SCANS["comment_daily"],
         }
         response = api_client.put(url, updated_data, format="json")
@@ -468,10 +469,10 @@ class TestWorkflow:
         assert findings_response.status_code == status.HTTP_200_OK
         assert len(findings_response.data["results"]) == 0
 
-        # 7. Run the worker to process the scan task
+        # Run the worker to process the scan task
         worker()
 
-        # 8. Verify scan was processed and has findings
+        # Verify scan was processed and has findings
         scan = Scan.objects.get(id=scan_id)
         assert scan.status == Scan.Status.COMPLETED
         findings_response = api_client.get(findings_url)
@@ -479,7 +480,7 @@ class TestWorkflow:
         if scan.status == Scan.Status.COMPLETED:
             assert len(findings_response.data["results"]) == 3
 
-        # 9. Update findings
+        # Update findings
         if findings_response.data["results"]:
             finding_id = findings_response.data["results"][0]["id"]
             finding_detail_url = reverse("scan-findings-detail", kwargs={"scan_pk": scan_id, "pk": finding_id})
